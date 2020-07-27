@@ -73,8 +73,8 @@
     //   Input number from pinpad backspace function
       function back(){
         const backSpaceInput = document.getElementById('inputField');
-        const backSpaceValue = backSpaceInput.value;
-        if(backSpaceValue.length > 0) {
+        let backSpaceValue = backSpaceInput.value;
+        if(backSpaceValue.length > 0){
           backSpaceValue = backSpaceValue.substring(0, backSpaceValue.length-1);
           backSpaceInput.value = backSpaceValue;
        }
@@ -97,8 +97,8 @@
     //  submit button function
       document.getElementsByClassName("submit-btn")[0].addEventListener("click", function(){
         
-        const inputField = document.getElementById('inputField').value;
-        const randomGeneratorInput = document.getElementById("pinGenerator").value;
+        let inputField = document.getElementById('inputField').value;
+        let randomGeneratorInput = document.getElementById("pinGenerator").value;
         if(inputField == randomGeneratorInput){
           if(inputField == "" && randomGeneratorInput == ""){
             document.getElementsByClassName("notify")[0].style.display = "none";
