@@ -12,13 +12,13 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="pin-generator half-width">
-                    <input id="pinGenerator" class="form-control text-white text-center" type="text">
+                    <input placeholder = "Pin Generator" id="pinGenerator" class="form-control text-white text-center" type="text">
                     <button onclick = "pinGenerator()" id="pinGeneratorButton" class="generate-btn">Generate Pin</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-section half-width">
-                    <input id="inputField" class="form-control text-white text-center" type="text">
+                    <input id="inputField" class="form-control text-white text-center" type="text" placeholder = "Enter pin number">
                     <div class="numbers">
                         <div class="calc-body">
                             <div class="calc-button-row">
@@ -37,12 +37,12 @@
                               <div onclick="pinpadNumber(3)" value = 3 class="button">3</div>
                             </div>
                             <div class="calc-button-row">
-                                <div id = "backSpace" onclick="back()" class="button"><</div>
+                                <div onclick="back()" id = "backSpace" class="button"><</div>
                                 <div onclick="pinpadNumber(0)" value=0 class="button">0</div>
                                 <div onclick="clean()" class="button">C</div>
                             </div>
                             <div>
-                                <button id = "submit" type="submit" class="submit-btn">Submit</button>
+                                <button type="submit" class="submit-btn">Submit</button>
                                 <p class="action-left"><span id ="attempt" >3</span> try left</p>
                                 <p class="action-left">Pin is not generated or empty</p>
 
@@ -58,7 +58,7 @@
     </div>
 
     <script>
-    //    Pin number random generator function
+    //  Pin number random generator function
     
       function pinGenerator(){   
         let num = Math.floor( 1000 + Math.random() * 9000);
@@ -85,7 +85,7 @@
         document.getElementById("inputField").value = "";
       }
 
-    //  result note hidden section and ap
+    //  result note hidden section and attempt   
     document.getElementsByClassName("notify")[0].style.display = "none";
     document.getElementsByClassName("notify")[1].style.display = "none";
     document.getElementsByClassName("action-left")[1].style.display ="none";
@@ -123,8 +123,9 @@
  
              document.getElementById("attempt").innerText= attempt;
              if(attempt == 0){
-              document.getElementsByClassName("submit-btn")[0].disabled = true;
-              document.getElementsByClassName("action-left")[0].innerText = "You are blocked, now refresh";
+               document.getElementsByClassName("submit-btn")[0].style.backgroundColor = "#425062";
+               document.getElementsByClassName("submit-btn")[0].disabled = true;
+               document.getElementsByClassName("action-left")[0].innerText = "You are blocked, now refresh";
 
          }
         }
