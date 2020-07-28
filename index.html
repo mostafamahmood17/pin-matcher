@@ -22,23 +22,23 @@
                     <div class="numbers">
                         <div class="calc-body">
                             <div class="calc-button-row">
-                              <div onclick="pinpadNumber(7)" value = 7 class="button">7</div>
-                              <div onclick="pinpadNumber(8)" value = 8 class="button">8</div>
-                              <div onclick="pinpadNumber(9)" value = 9 class="button">9</div>
+                              <div onclick="pinpadNumber(7)" value = "7" class="button">7</div>
+                              <div onclick="pinpadNumber(8)" value = "8" class="button">8</div>
+                              <div onclick="pinpadNumber(9)" value = "9" class="button">9</div>
                             </div>
                             <div class="calc-button-row">
-                              <div onclick="pinpadNumber(4)" value = 4 class="button">4</div>
-                              <div onclick="pinpadNumber(5)" value = 5 class="button">5</div>
-                              <div onclick="pinpadNumber(6)" value = 6 class="button">6</div>
+                              <div onclick="pinpadNumber(4)" value = "4" class="button">4</div>
+                              <div onclick="pinpadNumber(5)" value = "5" class="button">5</div>
+                              <div onclick="pinpadNumber(6)" value = "6" class="button">6</div>
                             </div>
                             <div class="calc-button-row">
-                              <div onclick="pinpadNumber(1)" value = 1 class="button">1</div>
-                              <div onclick="pinpadNumber(2)" value = 2 class="button">2</div>
-                              <div onclick="pinpadNumber(3)" value = 3 class="button">3</div>
+                              <div onclick="pinpadNumber(1)" value = "1" class="button">1</div>
+                              <div onclick="pinpadNumber(2)" value = "2" class="button">2</div>
+                              <div onclick="pinpadNumber(3)" value = "3" class="button">3</div>
                             </div>
                             <div class="calc-button-row">
                                 <div onclick="back()" id = "backSpace" class="button"><</div>
-                                <div onclick="pinpadNumber(0)" value=0 class="button">0</div>
+                                <div onclick="pinpadNumber(0)" value="0" class="button">0</div>
                                 <div onclick="clean()" class="button">C</div>
                             </div>
                             <div>
@@ -58,70 +58,79 @@
     </div>
 
     <script>
-    //  Pin number random generator function
+    // input field keyboard disabled only can generate by buttons
+     document.getElementById("pinGenerator").disabled = true;
+     document.getElementById("inputField").disabled = true;
+     document.getElementById("inputField").style.backgroundColor = "#3D4153";
+     document.getElementById("pinGenerator").style.backgroundColor = "#3D4153";
+
+     //  result note hidden section and attempt   
+     noteDisplay();
+     let attempt = 3;
     
-      function pinGenerator(){   
-        let num = Math.floor( 1000 + Math.random() * 9000);
-        return document.getElementById("pinGenerator").value = num;
-        };
+     
+     //  Pin number random generator function
+      function pinGenerator(){
+        // every time you generator the pin you have 3 attempts and will display 3 try left
+        // every time you generator the pin bottom notification vanishes
+        noteDisplay();
+        attempt = 3;  
+        document.getElementById("attempt").innerHTML ="3";
+
+         // generates 4 digit random number
+         let num = Math.floor( 1000 + Math.random() * 9000);
+         document.getElementById("pinGenerator").value = num;
+        
+      };
     
     // Number input in pinpad function
       function pinpadNumber(num) {
-        document.getElementById('inputField').value +=  num;
+        return document.getElementById('inputField').value +=  num;
       }
 
     //   Input number from pinpad backspace function
       function back(){
-        const backSpaceInput = document.getElementById('inputField');
-        let backSpaceValue = backSpaceInput.value;
-        if(backSpaceValue.length > 0){
-          backSpaceValue = backSpaceValue.substring(0, backSpaceValue.length-1);
-          backSpaceInput.value = backSpaceValue;
-       }
+        let backSpaceValue = document.getElementById('inputField').value;
+        document.getElementById('inputField').value = backSpaceValue.substring(0, backSpaceValue.length-1);
       }
-      
+        
     // Input number clear function
       function clean(){
         document.getElementById("inputField").value = "";
       }
 
-    //  result note hidden section and attempt   
-    document.getElementsByClassName("notify")[0].style.display = "none";
-    document.getElementsByClassName("notify")[1].style.display = "none";
-    document.getElementsByClassName("action-left")[1].style.display ="none";
-    document.getElementsByClassName("action-left")[0].style.display ="block";
-    let attempt = 3;
-    
-
-
     //  submit button function
       document.getElementsByClassName("submit-btn")[0].addEventListener("click", function(){
-        
         let inputField = document.getElementById('inputField').value;
-        let randomGeneratorInput = document.getElementById("pinGenerator").value;
-        if(inputField == randomGeneratorInput){
-          if(inputField == "" && randomGeneratorInput == ""){
+        let randomPinGeneratorInput = document.getElementById("pinGenerator").value;
+        if(inputField == randomPinGeneratorInput){
+          // it checks both of them are empty
+          if(inputField == "" && randomPinGeneratorInput == ""){
             document.getElementsByClassName("notify")[0].style.display = "none";
             document.getElementsByClassName("notify")[1].style.display = "none"; 
-            document.getElementsByClassName("action-left")[1].style.display ="block";
             document.getElementsByClassName("action-left")[0].style.display ="none";
+            document.getElementsByClassName("action-left")[1].style.display ="block";
+
           }
           else{
-             document.getElementsByClassName("notify")[1].style.display = "block";
              document.getElementsByClassName("notify")[0].style.display = "none";
-             document.getElementsByClassName("action-left")[0].style.display ="block";
+             document.getElementsByClassName("notify")[1].style.display = "block";
+             document.getElementsByClassName("action-left")[0].style.display ="none";
              document.getElementsByClassName("action-left")[1].style.display ="none";
+             //  every time pin matches attempt will be start over 3 counts
+             attempt = 3;
+            
+             
           }
              
         }
         else{
              attempt--;
+             document.getElementById("attempt").innerText= attempt;
              document.getElementsByClassName("notify")[0].style.display = "block";
              document.getElementsByClassName("notify")[1].style.display = "none";
              document.getElementsByClassName("action-left")[0].style.display ="block";
              document.getElementsByClassName("action-left")[1].style.display ="none";
- 
-             document.getElementById("attempt").innerText= attempt;
              if(attempt == 0){
                document.getElementsByClassName("submit-btn")[0].style.backgroundColor = "#425062";
                document.getElementsByClassName("submit-btn")[0].disabled = true;
@@ -131,6 +140,13 @@
         }
        }
       )
+
+      function noteDisplay(){
+        document.getElementsByClassName("notify")[0].style.display ="none";
+        document.getElementsByClassName("notify")[1].style.display = "none"; 
+        document.getElementsByClassName("action-left")[0].style.display ="block";
+        document.getElementsByClassName("action-left")[1].style.display ="none";
+      }
 
     </script>
 </body>
